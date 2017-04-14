@@ -1,4 +1,5 @@
 <?php 
+require_once 'constants.php';
 require_once 'filter.php';
 ?>
 <!DOCTYPE html>
@@ -19,8 +20,6 @@ require_once 'filter.php';
 		<title><?php echo $cause->title; ?> Profile Picture Filter</title>
 		<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
 		<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-		<script src="image-picker/image-picker.min.js"></script>
-		<link rel="stylesheet" href="image-picker/image-picker.css"></link>
 		<script>
 			$(function(){
 				document.images.selectedImage.src = im.src;

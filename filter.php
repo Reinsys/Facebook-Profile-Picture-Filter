@@ -5,11 +5,6 @@
 * @uses Facebook
 */
 
-define('FB_APP_ID', '');
-define('FB_APP_SECRET', '');
-define('UPLOADED_IMAGE_DESTINATION', 'originals/');
-define('PROCESSED_IMAGE_DESTINATION', 'images/');
-
 $causes = array(
 	'quebec' => array('size'=>600, 'opacity' => 60, 'name' => 'flag_quebec', 'image' => 'flag_quebec.png', 'hash' => '#Pray4Quebec', 'title'=>'Pray for Quebec','button'=>'Post to timeline and then set as profile picture', 'contact'=>'postmediapr@gmail.com')
 );

@@ -4,21 +4,22 @@
 * @copyright 2016-2017 Reinsys
 * @uses Facebook
 */
+require_once 'constants.php';
+require_once __DIR__ . '/vendor/autoload.php';
 
 $causes = array(
 	'quebec' => array('size'=>600, 'opacity' => 60, 'name' => 'flag_quebec', 'image' => 'flag_quebec.png', 'hash' => '#Pray4Quebec', 'title'=>'Pray for Quebec','button'=>'Post to timeline and then set as profile picture', 'contact'=>'postmediapr@gmail.com')
 );
 
-$causeID = trim(strtolower($_GET['causeID']));
-if(!in_array($causeID, array_keys($causes))) {
+if(!isset($_GET['causeID']) || !in_array($_GET['causeID'], array_keys($causes))) {
 	die('Cause not found.');
 	exit;
 }
 else{
+    $causeID = trim(strtolower($_GET['causeID']));
 	$cause = (object) $causes[$causeID];
 }
 session_start();
-require_once 'Facebook/autoload.php';
 
 $fb = new Facebook\Facebook([
   'app_id' => FB_APP_ID,
@@ -27,7 +28,7 @@ $fb = new Facebook\Facebook([
   ]);
   
 
-if($_GET['logout']){
+if(isset($_GET['logout'])){
 	unset($_SESSION['facebook_access_token']);
 	unset($_SESSION['facebook_name']);
 	unset($_SESSION['facebook_id']);
@@ -61,7 +62,6 @@ else{
 }
 if(isset($_POST['watermark'])) define('WATERMARK_OVERLAY_IMAGE', 'watermarks/'. $_POST['watermark'] . '.png');
 define('WATERMARK_OVERLAY_OPACITY', $cause->opacity);
-define('WATERMARK_OUTPUT_QUALITY', 100);
 
 function create_watermark($source_file_path, $output_file_path)
 {
@@ -193,7 +193,7 @@ function thumb320($filename, $watermark){
 /*
  * Here is how to call the function(s)
  */
-if((isset($_POST['submit']) || isset($_POST['save'])) && isset($_POST['watermark']) && $pictureNode && $pictureNode->getProperty('url')){
+if((isset($_POST['submit']) || isset($_POST['save'])) && isset($_POST['watermark']) && isset($pictureNode) && $pictureNode->getProperty('url')){
 	
 	$result = process_image($facebookId, $pictureNode->getProperty('url'));
 	if ($result === false) {
@@ -205,7 +205,7 @@ if((isset($_POST['submit']) || isset($_POST['save'])) && isset($_POST['watermark
 				$response = $fb->post('/me/photos/?url='. FILTER_BASE_URL .'/' . $result[1]);
 				$photoNode = $response->getGraphObject();
 
-				$publish = $fb->post('/me/feed/?link='. FILTER_BASE_URL .'/index.php.php?causeID='.$causeID.'&caption=Use Filter Now&picture='. thumb320($result[2], false) .'');
+				$publish = $fb->post('/me/feed/?link='. FILTER_BASE_URL .'/index.php?causeID='.$causeID.'&caption=Use Filter Now&picture='. thumb320($result[2], false) .'');
 				$publishNode = $publish->getGraphObject();
 				
 				$photoUrl = 'https://www.facebook.com/photo.php?fbid='.$photoNode->getProperty('id').'&makeprofile=1&profile_id='.$facebookId.'&pp_source=photo_view';

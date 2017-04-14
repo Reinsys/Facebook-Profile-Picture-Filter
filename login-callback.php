@@ -5,9 +5,10 @@
 * @uses Facebook
 */
 require_once 'constants.php';
+require_once __DIR__ . '/vendor/autoload.php';
+
 $causeID = trim(strtolower($_GET['causeID']));
 session_start();
-require_once 'Facebook/autoload.php';
 
 $fb = new Facebook\Facebook([
   'app_id' => FB_APP_ID,

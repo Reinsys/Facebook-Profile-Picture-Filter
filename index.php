@@ -82,7 +82,7 @@ require_once 'filter.php';
 					<div class="panel-body">
 						<div class="col-md-4" style="padding: 0px">
 							<div style="background: #eeeeee; width: 360px; padding: 20px" >
-							<?php if($pictureNode && $pictureNode->getProperty('url')):?>
+							<?php if(isset($pictureNode) && $pictureNode->getProperty('url')):?>
 								<img width="320" src="<?php echo $pictureNode->getProperty('url');?>" />
 							<?php else:?>
 							<img src="profile_placeholder.jpg" />

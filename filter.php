@@ -210,7 +210,7 @@ if((isset($_POST['submit']) || isset($_POST['save'])) && isset($_POST['watermark
 				$response = $fb->post('/me/photos/?url='. FILTER_BASE_URL .'/' . $result[1]);
 				$photoNode = $response->getGraphObject();
 
-				$publish = $fb->post('/me/feed/?link='. FILTER_BASE_URL .'/causes.php?causeID='.$causeID.'&caption=Use Filter Now&picture='. thumb320($result[2], false) .'');
+				$publish = $fb->post('/me/feed/?link='. FILTER_BASE_URL .'/index.php.php?causeID='.$causeID.'&caption=Use Filter Now&picture='. thumb320($result[2], false) .'');
 				$publishNode = $publish->getGraphObject();
 				
 				$photoUrl = 'https://www.facebook.com/photo.php?fbid='.$photoNode->getProperty('id').'&makeprofile=1&profile_id='.$facebookId.'&pp_source=photo_view';
